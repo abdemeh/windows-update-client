@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Menu from "./components/Menu";
+import CreateSession from "./components/CreateSession";
+import ManageServerGroup from "./components/ManageServerGroup";
+import UpdateStatus from "./components/UpdateStatus";
+import "./style.css";
 
 function App() {
+  const [activePage, setActivePage] = useState("manage");
+
+  let PageComponent;
+  if (activePage === "manage") PageComponent = <ManageServerGroup />;
+  else if (activePage === "create") PageComponent = <CreateSession />;
+  else if (activePage === "update") PageComponent = <UpdateStatus />;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Menu activePage={activePage} setActivePage={setActivePage} />
+      <section className="home">
+        {PageComponent}
+      </section>
+    </>
   );
 }
 
